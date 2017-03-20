@@ -1,0 +1,28 @@
+from Tkinter import*
+
+class buttonGUI:
+  def __init__(self, initialValue):
+    self.__mainWindow = Tk()
+    #self.fram1 = Frame(self.__mainWindow)
+    self.input = initialValue
+    self.labelText = str(self.input)
+    self.num = Label(self.__mainWindow, text = self.labelText)
+    self.increaseButton = Button(self.__mainWindow, text = "+", command = self.increase)
+    self.decreaseButton = Button(self.__mainWindow, text = "-", command = self.decrease)
+    self.increaseButton.grid(row=0,column=0)
+    self.decreaseButton.grid(row=0,column=2)
+    self.num.grid(row=0,column=1)
+
+    mainloop()
+
+  def increase(self):
+    self.input = self.input+1
+    self.labelText = str(self.input)
+    self.num.config(text=self.labelText)
+
+  def decrease(self):
+    self.input = self.input-1
+    self.labelText = str(self.input)
+    self.num.config(text=self.labelText)
+
+myGUI = buttonGUI(999)
