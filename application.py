@@ -10,7 +10,7 @@ class iHartGUI2017():
         self.root.geometry('250x300') #specify top-level window size and position
         self.menubar()
         self.create_upper_bar()
-        self.slider(0, 0, 0, 0, 0)
+        self.slider(10, 15, 20, 30, 40)
         self.root.mainloop()
 
 
@@ -20,7 +20,7 @@ class iHartGUI2017():
         flip_frame.config(height=20)
         flip_frame.grid(row=0, columnspan = 20, sticky=W+E, padx=5, pady=5)
         button = Button(flip_frame, text="Flip Horizontal")
-        button.grid(row=5, column=10, padx=1)
+        button.grid(row=5, column=10, padx=50)
 
 
     def slider(self, reduceNoise, blurValue, blobSize, motionThread, mergeDistance):
