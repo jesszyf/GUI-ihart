@@ -11,6 +11,7 @@ class iHartGUI2017():
         self.menubar()
         self.create_upper_bar()
         self.buttons(10, 15, 20, 30, 40)
+        self.root.resizable(0,0)
         self.root.mainloop()
 
 
@@ -154,9 +155,9 @@ class iHartGUI2017():
 
         # file menu that contains open, save, create presents option
         fileMenu = Menu(self.menubar, tearoff=0 )
-        fileMenu.add_command(label="Open Present", command = self.load_present)
-        fileMenu.add_command(label="Save Present", command = self.save_present)
-        fileMenu.add_command(label="Create Present", command = self.create_present)
+        fileMenu.add_command(label="Open Preset", command = self.load_present)
+        fileMenu.add_command(label="Save Preset", command = self.save_present)
+        fileMenu.add_command(label="Create Preset", command = self.create_present)
         self.menubar.add_cascade(label="File", menu=fileMenu)
 
         # about menu that contains About option and Info option
@@ -167,12 +168,13 @@ class iHartGUI2017():
 
         # quit menu
         quitMenu = Menu(self.menubar, tearoff=0)
-        self.menubar.add_cascade(label="Quit", menu=quitMenu, command = self.quit)
-
+        self.menubar.add_cascade(label="Quit", menu=quitMenu)
+        quitMenu.add_command(label="Quit!", command=self.quit)
         self.root.config(menu=self.menubar)
 
 
     def about(self):
+        # mainIcon = PhotoImage(file='icons/small.png')
         tkMessageBox.showinfo("About","GUI demo for iHart 2017")
 
 
@@ -181,7 +183,6 @@ class iHartGUI2017():
 
 
     def quit(self):
-        self.Quitbuttonvar.configure(state="disabled")
         if tkMessageBox.askokcancel("Quit", "Do you really want to quit?"):
             self.root.destroy()
 
