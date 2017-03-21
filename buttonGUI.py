@@ -74,11 +74,6 @@ class buttonGUI:
     self.num4.grid(row=5,column=2)
     self.decreaseButton4.grid(row=5,column=3)
 
-    self.helpButton = Button(self.__mainWindow, text = "Help")
-    self.quitButton = Button(self.__mainWindow, text = "Quit")
-    self.helpButton.grid(row = 6, column = 0)
-    self.quitButton.grid(row = 6, column = 2)
-
     mainloop()
 
   def increase0(self):
