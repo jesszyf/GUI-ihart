@@ -33,7 +33,7 @@ class iHartGUI2017():
         self.input0 = reduceNoise
         self.numText0 = str(self.input0)
 
-        self.textLabel0 = Label(bottom_frame, text = "Reduce Noise", bg="grey")
+        self.textLabel0 = Label(bottom_frame, text = "Reduce Noise", bg="white")
         self.num0 = Label(bottom_frame, text = self.numText0)
         self.increaseButton0 = Button(bottom_frame, text = "+", command = self.increase0)
         self.decreaseButton0 = Button(bottom_frame, text = "-", command = self.decrease0)
@@ -46,7 +46,7 @@ class iHartGUI2017():
         self.input1 = blurValue
         self.numText1 = str(self.input1)
 
-        self.textLabel1 = Label(bottom_frame, text = "Blur Value", bg="grey")
+        self.textLabel1 = Label(bottom_frame, text = "Blur Value", bg="white")
         self.num1 = Label(bottom_frame, text = self.numText1)
         self.increaseButton1 = Button(bottom_frame, text = "+", command = self.increase1)
         self.decreaseButton1 = Button(bottom_frame, text = "-", command = self.decrease1)
@@ -59,7 +59,7 @@ class iHartGUI2017():
         self.input2 = blobSize
         self.numText2 = str(self.input2)
 
-        self.textLabel2 = Label(bottom_frame, text = "Blob Size", bg="grey")
+        self.textLabel2 = Label(bottom_frame, text = "Blob Size", bg="white")
         self.num2 = Label(bottom_frame, text = self.numText2)
         self.increaseButton2 = Button(bottom_frame, text = "+", command = self.increase2)
         self.decreaseButton2 = Button(bottom_frame, text = "-", command = self.decrease2)
@@ -72,7 +72,7 @@ class iHartGUI2017():
         self.input3 = motionThread
         self.numText3 = str(self.input3)
 
-        self.textLabel3 = Label(bottom_frame, text = "Motion Thread", bg="grey")
+        self.textLabel3 = Label(bottom_frame, text = "Motion Thread", bg="white")
         self.num3 = Label(bottom_frame, text = self.numText3)
         self.increaseButton3 = Button(bottom_frame, text = "+", command = self.increase3)
         self.decreaseButton3 = Button(bottom_frame, text = "-", command = self.decrease3)
@@ -85,7 +85,7 @@ class iHartGUI2017():
         self.input4 = mergeDistance
         self.numText4 = str(self.input4)
 
-        self.textLabel4 = Label(bottom_frame, text = "Merge Distance", bg="grey")
+        self.textLabel4 = Label(bottom_frame, text = "Merge Distance", bg="white")
         self.num4 = Label(bottom_frame, text = self.numText4)
         self.increaseButton4 = Button(bottom_frame, text = "+", command = self.increase4)
         self.decreaseButton4 = Button(bottom_frame, text = "-", command = self.decrease4)
