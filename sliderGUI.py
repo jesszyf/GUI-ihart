@@ -1,10 +1,11 @@
 from Tkinter import*
 
 class buttonGUI:
+
   def __init__(self, reduceNoise, blurValue, blobSize, motionThread, mergeDistance):
     self.__mainWindow = Tk()
 
-    self.enableFaceButton = Button(self.__mainWindow, text = "Eable Face")
+    self.enableFaceButton = Button(self.__mainWindow, text = "Enable Face")
     self.enableMotionButton = Button(self.__mainWindow, text = "Enable Motion")
     self.enableFaceButton.grid(row = 0, column = 0)
     self.enableMotionButton.grid(row = 0, column = 1)
@@ -43,12 +44,6 @@ class buttonGUI:
     self.mergeScale.set(self.input4)
     self.textLabel4.grid(row = 5, column = 0)
     self.mergeScale.grid(row = 5, column = 1)
-
-    self.helpButton = Button(self.__mainWindow, text = "Help")
-    self.quitButton = Button(self.__mainWindow, text = "Quit")
-    self.helpButton.grid(row = 6, column = 0)
-    self.quitButton.grid(row = 6, column = 1)
-
 
 
     mainloop()
