@@ -18,7 +18,6 @@ class buttonGUI:
     self.enableMotionCheckBox = Checkbutton(self.__mainWindow, text = "Enable Motion", variable = MotionVar, onvalue = 1, offvalue = 0, height=3, width = 15)
     self.enableFaceCheckBox.pack()
     self.enableMotionCheckBox.pack()
-
     self.enableFaceCheckBox.grid(row = 0, column = 0)
     self.enableMotionCheckBox.grid(row = 0, column = 1)
 

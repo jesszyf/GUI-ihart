@@ -1,5 +1,5 @@
 # from application import *
-from buttonApplication import *
+from sliderApplication import *
 
 gui = iHartGUI2017()
 

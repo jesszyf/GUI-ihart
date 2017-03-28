@@ -29,42 +29,53 @@ class iHartGUI2017():
         bottom_frame = Frame(self.root)
         bottom_frame.grid(row=20, column=0, columnspan=3,sticky=W+E+N+S)
 
-        enableFaceButton = Button(bottom_frame, text = "Enable Face")
-        enableMotionButton = Button(bottom_frame, text = "Enable Motion")
-        enableFaceButton.grid(row = 0, column = 0, sticky = W)
-        enableMotionButton.grid(row = 0, column = 1, sticky = E)
+        # varibles for further use
+        FaceVar = IntVar()
+        MotionVar = IntVar()
+        ReduceNoiceVar = IntVar()
+        BlurValueVar = IntVar()
+        BlobSizeVar = IntVar()
+        MotionThreadVar = IntVar()
+        MergeDistanceVar = IntVar()
+
+        enableFaceCheckBox = Checkbutton(bottom_frame, text = "Enable Face", variable = FaceVar, onvalue = 1, offvalue = 0)
+        enableMotionCheckBox = Checkbutton(bottom_frame, text = "Enable Motion", variable = MotionVar, onvalue = 1, offvalue = 0)
+        enableFaceCheckBox.pack()
+        enableMotionCheckBox.pack()
+        enableFaceCheckBox.grid(row = 0, column = 0)
+        enableMotionCheckBox.grid(row = 0, column = 1)
 
         input0 = reduceNoise
         textLabel0 = Label(bottom_frame, text = "Reduce Noise")
-        reduceScale = Scale(bottom_frame, from_=0, to=50, orient = HORIZONTAL)
+        reduceScale = Scale(bottom_frame, from_=0, to=50, variable = ReduceNoiceVar, orient = HORIZONTAL)
         reduceScale.set(input0)
         textLabel0.grid(row = 1, column = 0, sticky = E)
         reduceScale.grid(row = 1, column = 1, sticky = E)
 
         input1 = blurValue
         textLabel1 = Label(bottom_frame, text = "Blur Value")
-        blurScale = Scale(bottom_frame, from_=0, to=50, orient = HORIZONTAL)
+        blurScale = Scale(bottom_frame, from_=0, to=50, variable = BlurValueVar, orient = HORIZONTAL)
         blurScale.set(input1)
         textLabel1.grid(row = 2, column = 0, sticky = E)
         blurScale.grid(row = 2, column = 1, sticky = E)
 
         input2 = blobSize
         textLabel2 = Label(bottom_frame, text = "Blob Size")
-        blobScale = Scale(bottom_frame, from_=0, to=50, orient = HORIZONTAL)
+        blobScale = Scale(bottom_frame, from_=0, to=50, variable = BlobSizeVar, orient = HORIZONTAL)
         blobScale.set(input2)
         textLabel2.grid(row = 3, column = 0, sticky = E)
         blobScale.grid(row = 3, column = 1, sticky = E)
 
         input3 = motionThread
         textLabel3 = Label(bottom_frame, text = "Motion Thread")
-        motionScale = Scale(bottom_frame, from_=0, to=50, orient = HORIZONTAL)
+        motionScale = Scale(bottom_frame, from_=0, to=50, variable = MotionThreadVar, orient = HORIZONTAL)
         motionScale.set(input3)
         textLabel3.grid(row = 4, column = 0, sticky = E)
         motionScale.grid(row = 4, column = 1, sticky = E)
 
         input4 = mergeDistance
         textLabel4 = Label(bottom_frame, text = "Merge Distance")
-        mergeScale = Scale(bottom_frame, from_=0, to=50, orient = HORIZONTAL)
+        mergeScale = Scale(bottom_frame, from_=0, to=50, variable = MergeDistanceVar, orient = HORIZONTAL)
         mergeScale.set(input4)
         textLabel4.grid(row = 5, column = 0, sticky = E)
         mergeScale.grid(row = 5, column = 1, sticky = E)
