@@ -39,7 +39,8 @@ class iHartGUI2017():
 
         # varibles for further use
         FaceVar = IntVar()
-        MotionVar = IntVar()
+        FaceVar.set(1)
+        MotionVar = BooleanVar()
         ReduceNoiceVar = IntVar()
         BlurValueVar = IntVar()
         BlobSizeVar = IntVar()
@@ -47,7 +48,7 @@ class iHartGUI2017():
         MergeDistanceVar = IntVar()
 
         enableFaceCheckBox = Checkbutton(bottom_frame, text = "Enable Face", variable = FaceVar, onvalue = 1, offvalue = 0)
-        enableMotionCheckBox = Checkbutton(bottom_frame, text = "Enable Motion", variable = MotionVar, onvalue = 1, offvalue = 0)
+        enableMotionCheckBox = Checkbutton(bottom_frame, text = "Enable Motion", variable = MotionVar, onvalue = True, offvalue = False)
         enableFaceCheckBox.pack()
         enableMotionCheckBox.pack()
         enableFaceCheckBox.grid(row=0, column = 0)
@@ -59,7 +60,7 @@ class iHartGUI2017():
         self.reduceScale.set(self.input0)
         increaseButton0 = Button(bottom_frame, text = "+", command = self.increase0)
         decreaseButton0 = Button(bottom_frame, text = "-", command = self.decrease0)
-        textLabel0.grid(row = 1, column = 0)
+        textLabel0.grid(row = 1, column = 0, sticky = W)
         decreaseButton0.grid(row = 1, column = 1)
         self.reduceScale.grid(row = 1, column = 2)
         increaseButton0.grid(row = 1, column = 3)
@@ -70,7 +71,7 @@ class iHartGUI2017():
         self.blurScale.set(self.input1)
         increaseButton1 = Button(bottom_frame, text = "+", command = self.increase1)
         decreaseButton1 = Button(bottom_frame, text = "-", command = self.decrease1)
-        textLabel1.grid(row = 2, column = 0)
+        textLabel1.grid(row = 2, column = 0, sticky = W)
         decreaseButton1.grid(row = 2, column = 1)
         self.blurScale.grid(row = 2, column = 2)
         increaseButton1.grid(row = 2, column = 3)
@@ -81,7 +82,7 @@ class iHartGUI2017():
         self.blobScale.set(self.input2)
         increaseButton2 = Button(bottom_frame, text = "+", command = self.increase2)
         decreaseButton2 = Button(bottom_frame, text = "-", command = self.decrease2)
-        textLabel2.grid(row = 3, column = 0)
+        textLabel2.grid(row = 3, column = 0,sticky = W)
         decreaseButton2.grid(row = 3, column = 1)
         self.blobScale.grid(row = 3, column = 2)
         increaseButton2.grid(row = 3, column = 3)
@@ -92,7 +93,7 @@ class iHartGUI2017():
         self.motionScale.set(self.input3)
         increaseButton3 = Button(bottom_frame, text = "+", command = self.increase3)
         decreaseButton3 = Button(bottom_frame, text = "-", command = self.decrease3)
-        textLabel3.grid(row = 4, column = 0)
+        textLabel3.grid(row = 4, column = 0,sticky = W)
         decreaseButton3.grid(row = 4, column = 1)
         self.motionScale.grid(row = 4, column = 2)
         increaseButton3.grid(row = 4, column = 3)
@@ -103,49 +104,59 @@ class iHartGUI2017():
         self.mergeScale.set(self.input4)
         increaseButton4 = Button(bottom_frame, text = "+", command = self.increase4)
         decreaseButton4 = Button(bottom_frame, text = "-", command = self.decrease4)
-        textLabel4.grid(row = 5, column = 0)
+        textLabel4.grid(row = 5, column = 0,sticky = W)
         decreaseButton4.grid(row = 5, column = 1)
         self.mergeScale.grid(row = 5, column = 2)
         increaseButton4.grid(row = 5, column = 3)
 
     def increase0(self):
-        self.input0= self.input0+1
+        if self.input0< 20:
+            self.input0= self.input0+1
         self.reduceScale.set(self.input0)
 
     def decrease0(self):
-        self.input0= self.input0-1
+        if self.input0>0:
+            self.input0= self.input0-1
         self.reduceScale.set(self.input0)
 
     def increase1(self):
-        self.input1= self.input1+1
+        if self.input1< 20:
+            self.input1= self.input1+1
         self.blurScale.set(self.input1)
 
     def decrease1(self):
-        self.input1= self.input1-1
+        if self.input1 >0:
+            self.input1= self.input1-1
         self.blurScale.set(self.input1)
 
     def increase2(self):
-        self.input2= self.input2+1
+        if self.input2 <20:
+            self.input2= self.input2+1
         self.blobScale.set(self.input2)
 
     def decrease2(self):
-        self.input2= self.input2-1
+        if self.input2 >0:
+            self.input2= self.input2-1
         self.blobScale.set(self.input2)
 
     def increase3(self):
-        self.input3= self.input3+1
+        if self.input3 <50:
+            self.input3= self.input3+1
         self.motionScale.set(self.input3)
 
     def decrease3(self):
-        self.input3= self.input3-1
+        if self.input3 >0:
+            self.input3= self.input3-1
         self.motionScale.set(self.input3)
 
     def increase4(self):
-        self.input4= self.input4+1
+        if self.input4 <10:
+            self.input4= self.input4+1
         self.mergeScale.set(self.input4)
 
     def decrease4(self):
-        self.input4= self.input4-1
+        if self.input4 >0:
+            self.input4= self.input4-1
         self.mergeScale.set(self.input4)
 
 
