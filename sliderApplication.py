@@ -1,5 +1,7 @@
-from Tkinter import*
 import tkMessageBox
+from Tkinter import *
+from tkFont import Font
+
 
 
 class iHartGUI2017():
@@ -7,13 +9,19 @@ class iHartGUI2017():
     def guiApp(self):
         self.root = Tk()
         self.root.title("iHart GUI Demo")
-        self.root.geometry('300x270') #specify top-level window size and position
+        self.customFont = Font(family="courier", size=12)
+        self.root.option_add("*Font", self.customFont)
+        self.defaultW=300
+        self.defaultH=270
+        self.ratio = 1
+        self.frameW  = int(self.defaultW* self.ratio)
+        self.frameH  = int(self.defaultH * self.ratio)
+        self.root.geometry("%dx%d"%(self.frameW,self.frameH))
         self.menubar()
         self.create_upper_bar()
-        self.slider(10, 15, 20, 30, 40)
+        self.slider(10, 10, 10, 10, 10)
         self.root.resizable(0,0)
         self.root.mainloop()
-
 
     def create_upper_bar(self):
 
@@ -47,7 +55,7 @@ class iHartGUI2017():
 
         self.input0 = reduceNoise
         textLabel0 = Label(bottom_frame, text = "Reduce Noise")
-        self.reduceScale = Scale(bottom_frame, from_=0, to=50, variable = ReduceNoiceVar, orient = HORIZONTAL)
+        self.reduceScale = Scale(bottom_frame, from_=0, to=20, variable = ReduceNoiceVar, orient = HORIZONTAL)
         self.reduceScale.set(self.input0)
         increaseButton0 = Button(bottom_frame, text = "+", command = self.increase0)
         decreaseButton0 = Button(bottom_frame, text = "-", command = self.decrease0)
@@ -58,7 +66,7 @@ class iHartGUI2017():
 
         self.input1 = blurValue
         textLabel1 = Label(bottom_frame, text = "Blur Value")
-        self.blurScale = Scale(bottom_frame, from_=0, to=50, variable = BlurValueVar, orient = HORIZONTAL)
+        self.blurScale = Scale(bottom_frame, from_=0, to=20, variable = BlurValueVar, orient = HORIZONTAL)
         self.blurScale.set(self.input1)
         increaseButton1 = Button(bottom_frame, text = "+", command = self.increase1)
         decreaseButton1 = Button(bottom_frame, text = "-", command = self.decrease1)
@@ -69,7 +77,7 @@ class iHartGUI2017():
 
         self.input2 = blobSize
         textLabel2 = Label(bottom_frame, text = "Blob Size")
-        self.blobScale = Scale(bottom_frame, from_=0, to=50, variable = BlobSizeVar, orient = HORIZONTAL)
+        self.blobScale = Scale(bottom_frame, from_=0, to=20, variable = BlobSizeVar, orient = HORIZONTAL)
         self.blobScale.set(self.input2)
         increaseButton2 = Button(bottom_frame, text = "+", command = self.increase2)
         decreaseButton2 = Button(bottom_frame, text = "-", command = self.decrease2)
@@ -91,7 +99,7 @@ class iHartGUI2017():
 
         self.input4 = mergeDistance
         textLabel4 = Label(bottom_frame, text = "Merge Distance")
-        self.mergeScale = Scale(bottom_frame, from_=0, to=50, variable = MergeDistanceVar, orient = HORIZONTAL)
+        self.mergeScale = Scale(bottom_frame, from_=0, to=10, variable = MergeDistanceVar, orient = HORIZONTAL)
         self.mergeScale.set(self.input4)
         increaseButton4 = Button(bottom_frame, text = "+", command = self.increase4)
         decreaseButton4 = Button(bottom_frame, text = "-", command = self.decrease4)
@@ -141,17 +149,15 @@ class iHartGUI2017():
         self.mergeScale.set(self.input4)
 
 
-
-
     def menubar(self):
 
         self.menubar = Menu(self.root)
 
         # file menu that contains open, save, create presents option
         fileMenu = Menu(self.menubar, tearoff=0 )
-        fileMenu.add_command(label="Open Preset", command = self.load_present)
-        fileMenu.add_command(label="Save Preset", command = self.save_present)
-        fileMenu.add_command(label="Create Preset", command = self.create_present)
+        # fileMenu.add_command(label="Open Preset", command = self.load_present)
+        # fileMenu.add_command(label="Save Preset", command = self.save_present)
+        # fileMenu.add_command(label="Create Preset", command = self.create_present)
         self.menubar.add_cascade(label="File", menu=fileMenu)
 
         # about menu that contains About option and Info option
@@ -160,6 +166,12 @@ class iHartGUI2017():
         aboutMenu.add_command(label="Info", command = self.info)
         self.menubar.add_cascade(label="About", menu=aboutMenu)
 
+        # #preference menu
+        prefMenu = Menu(self.menubar, tearoff=0)
+        prefMenu.add_command(label="Larger Font", command = self.largerFont)
+        prefMenu.add_command(label="Smaller Font", command = self.smallerFont)
+        self.menubar.add_cascade(label="Preference", menu=prefMenu)
+
         # quit menu
         quitMenu = Menu(self.menubar, tearoff=0)
         self.menubar.add_cascade(label="Quit", menu=quitMenu)
@@ -167,6 +179,18 @@ class iHartGUI2017():
 
         self.root.config(menu=self.menubar)
 
+    def largerFont(self):
+        # self.ratio = self.ratio * 1.2
+        size = self.customFont['size']
+        self.customFont.configure(size=size+2)
+        self.root.update_idletasks()
+
+
+    def smallerFont(self):
+        size = self.customFont['size']
+        self.customFont.configure(size=size-2)
+        # self.ratio = self.ratio* 0.8
+        self.root.update_idletasks()
 
     def about(self):
         tkMessageBox.showinfo("About","GUI demo for iHart 2017")
