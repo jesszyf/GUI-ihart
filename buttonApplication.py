@@ -20,7 +20,7 @@ class iHartGUI2017():
         flip_frame.config(height=20)
         flip_frame.grid(row=0, columnspan = 20, sticky=W+E, padx=5, pady=5)
         button = Button(flip_frame, text="Flip Horizontal")
-        button.grid(row=5, column=10, padx=50)
+        button.pack(anchor = CENTER)
 
     def buttons(self, reduceNoise, blurValue, blobSize, motionThread, mergeDistance):
         bottom_frame = Frame(self.root)
