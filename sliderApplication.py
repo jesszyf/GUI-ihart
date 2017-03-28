@@ -7,7 +7,7 @@ class iHartGUI2017():
     def guiApp(self):
         self.root = Tk()
         self.root.title("iHart GUI Demo")
-        self.root.geometry('250x300') #specify top-level window size and position
+        self.root.geometry('300x270') #specify top-level window size and position
         self.menubar()
         self.create_upper_bar()
         self.slider(10, 15, 20, 30, 40)
@@ -43,42 +43,70 @@ class iHartGUI2017():
         enableFaceCheckBox.pack()
         enableMotionCheckBox.pack()
         enableFaceCheckBox.grid(row = 0, column = 0)
-        enableMotionCheckBox.grid(row = 0, column = 1)
+        enableMotionCheckBox.grid(row = 0, column = 2)
 
         input0 = reduceNoise
         textLabel0 = Label(bottom_frame, text = "Reduce Noise")
         reduceScale = Scale(bottom_frame, from_=0, to=50, variable = ReduceNoiceVar, orient = HORIZONTAL)
         reduceScale.set(input0)
-        textLabel0.grid(row = 1, column = 0, sticky = E)
-        reduceScale.grid(row = 1, column = 1, sticky = E)
+        increaseButton0 = Button(bottom_frame, text = "+", command = self.increase(input0, reduceScale))
+        decreaseButton0 = Button(bottom_frame, text = "-", command = self.decrease(input0,reduceScale))
+        textLabel0.grid(row = 1, column = 0)
+        decreaseButton0.grid(row = 1, column = 1)
+        reduceScale.grid(row = 1, column = 2)
+        increaseButton0.grid(row = 1, column = 3)
 
         input1 = blurValue
         textLabel1 = Label(bottom_frame, text = "Blur Value")
         blurScale = Scale(bottom_frame, from_=0, to=50, variable = BlurValueVar, orient = HORIZONTAL)
         blurScale.set(input1)
-        textLabel1.grid(row = 2, column = 0, sticky = E)
-        blurScale.grid(row = 2, column = 1, sticky = E)
+        increaseButton1 = Button(bottom_frame, text = "+", command = self.increase(input1, blurScale))
+        decreaseButton1 = Button(bottom_frame, text = "-", command = self.decrease(input1, blurScale))
+        textLabel1.grid(row = 2, column = 0)
+        decreaseButton1.grid(row = 2, column = 1)
+        blurScale.grid(row = 2, column = 2)
+        increaseButton1.grid(row = 2, column = 3)
 
         input2 = blobSize
         textLabel2 = Label(bottom_frame, text = "Blob Size")
         blobScale = Scale(bottom_frame, from_=0, to=50, variable = BlobSizeVar, orient = HORIZONTAL)
         blobScale.set(input2)
-        textLabel2.grid(row = 3, column = 0, sticky = E)
-        blobScale.grid(row = 3, column = 1, sticky = E)
+        increaseButton2 = Button(bottom_frame, text = "+", command = self.increase(input2, blobScale))
+        decreaseButton2 = Button(bottom_frame, text = "-", command = self.decrease(input2, blobScale))
+        textLabel2.grid(row = 3, column = 0)
+        decreaseButton2.grid(row = 3, column = 1)
+        blobScale.grid(row = 3, column = 2)
+        increaseButton2.grid(row = 3, column = 3)
 
         input3 = motionThread
         textLabel3 = Label(bottom_frame, text = "Motion Thread")
         motionScale = Scale(bottom_frame, from_=0, to=50, variable = MotionThreadVar, orient = HORIZONTAL)
         motionScale.set(input3)
-        textLabel3.grid(row = 4, column = 0, sticky = E)
-        motionScale.grid(row = 4, column = 1, sticky = E)
+        increaseButton3 = Button(bottom_frame, text = "+", command = self.increase(input3, motionScale))
+        decreaseButton3 = Button(bottom_frame, text = "-", command = self.decrease(input3, motionScale))
+        textLabel3.grid(row = 4, column = 0)
+        decreaseButton3.grid(row = 4, column = 1)
+        motionScale.grid(row = 4, column = 2)
+        increaseButton3.grid(row = 4, column = 3)
 
         input4 = mergeDistance
         textLabel4 = Label(bottom_frame, text = "Merge Distance")
         mergeScale = Scale(bottom_frame, from_=0, to=50, variable = MergeDistanceVar, orient = HORIZONTAL)
         mergeScale.set(input4)
-        textLabel4.grid(row = 5, column = 0, sticky = E)
-        mergeScale.grid(row = 5, column = 1, sticky = E)
+        increaseButton4 = Button(bottom_frame, text = "+", command = self.increase(input4, mergeScale))
+        decreaseButton4 = Button(bottom_frame, text = "-", command = self.decrease(input4, mergeScale))
+        textLabel4.grid(row = 5, column = 0)
+        decreaseButton4.grid(row = 5, column = 1)
+        mergeScale.grid(row = 5, column = 2)
+        increaseButton4.grid(row = 5, column = 3)
+
+    def increase(self, inputIncrease, slideBar):
+        result= inputIncrease+1
+        slideBar.set(result)
+
+    def decrease(self, inputDecrease, slideBar):
+        result= inputDecrease
+        slideBar.set(result)
 
 
     def menubar(self):
