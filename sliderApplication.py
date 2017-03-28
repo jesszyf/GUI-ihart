@@ -42,7 +42,7 @@ class iHartGUI2017():
         enableMotionCheckBox = Checkbutton(bottom_frame, text = "Enable Motion", variable = MotionVar, onvalue = 1, offvalue = 0)
         enableFaceCheckBox.pack()
         enableMotionCheckBox.pack()
-        enableFaceCheckBox.grid(row = 0, column = 0)
+        enableFaceCheckBox.grid(row=0, column = 0)
         enableMotionCheckBox.grid(row = 0, column = 2)
 
         self.input0 = reduceNoise
@@ -105,7 +105,7 @@ class iHartGUI2017():
         self.reduceScale.set(self.input0)
 
     def decrease0(self):
-        self.input1= self.input0-1
+        self.input0= self.input0-1
         self.reduceScale.set(self.input0)
 
     def increase1(self):
