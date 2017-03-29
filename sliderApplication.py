@@ -8,22 +8,19 @@ class App():
     def __init__(self, root):
 
         self.root = root     #creates an instance --> what we call the root window
-        custom_font = Font(family="courier", size=12)
-        self.root.option_add("*Font", custom_font)
         self.main_panel = MainPanel(self.root)
         self.upper_bar = UpperBar(self.root, self.main_panel)
         self.slider = Slider(self.root, self.main_panel, 10, 10, 10, 10, 10)
         self.menu = MenuBar(self.root,self.main_panel)
 
-    # def fonts(self):
-    #     custom_font = Font(family="courier", size=12)
-    #     # self.root.option_add("*Font", custom_font)
-    #     return custom_font
+
 
 class MainPanel():
 
     def __init__(self,root):
         self.root = root
+        self.custom_font = Font(family="courier", size=12)
+        self.root.option_add("*Font", self.custom_font)
         self.root.title("iHart GUI Demo")
         self.default_width = 300
         self.default_height = 300
@@ -39,9 +36,22 @@ class MainPanel():
         # board.grid(row=1, column=1)
         # self.board.grid(row=1, column=1)
 
+    def change_font(self):
+        new_font = Font(family="Times", size=12)
+        self.root.option_add("*Font", new_font)
+        self.root.update_idletasks()
 
+    def larger_font(self):
+        size = self.custom_font['size']
+        self.custom_font.configure(size=size + 2)
+        self.root.update_idletasks()
 
-    # def panelSize(self):
+    def smaller_font(self):
+        size = self.custom_font['size']
+        self.custom_font.configure(size=size - 2)
+        self.root.update_idletasks()
+
+            # def panelSize(self):
     #     custom_font = Font(family="courier", size=12)
         #         root.option_add("*Font", custom_font)
 
@@ -60,6 +70,10 @@ class UpperBar():
         button = Button(flip_frame, text="Flip Horizontal")
         button.pack(anchor = CENTER)
 
+# class CheckButton():
+#     def __init__(self, frame, msg, var):
+#
+#         return Checkbutton(frame, text = msg, variable = var, onvalue = 1, offvalue = 0)
 
 class Slider():
     def __init__(self, root, main_panel, reduceNoise, blurValue, blobSize, motionThread, mergeDistance):
@@ -204,8 +218,9 @@ class MenuBar():
 
         # #preference menu
         prefMenu = Menu(self.menubar, tearoff=0)
-        prefMenu.add_command(label="Larger Font", command = self.largerFont)
-        prefMenu.add_command(label="Smaller Font", command = self.smallerFont)
+        prefMenu.add_command(label="Larger Font", command = self.board.larger_font)
+        prefMenu.add_command(label="Smaller Font", command = self.board.smaller_font)
+        prefMenu.add_command(label="Change Font", command=self.board.change_font)
         self.menubar.add_cascade(label="Preference", menu=prefMenu)
 
         # quit menu
@@ -215,18 +230,9 @@ class MenuBar():
 
         self.root.config(menu=self.menubar)
 
-    def largerFont(self):
-        # self.ratio = self.ratio * 1.2
-        size = customFont['size']
-        self.customFont.configure(size=size+2)
-        self.root.update_idletasks()
 
 
-    def smallerFont(self):
-        size = self.customFont['size']
-        self.customFont.configure(size=size-2)
-        # self.ratio = self.ratio* 0.8
-        self.root.update_idletasks()
+
 
     def about(self):
         tkMessageBox.showinfo("About","GUI demo for iHart 2017")
