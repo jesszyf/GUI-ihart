@@ -3,37 +3,71 @@ from Tkinter import *
 from tkFont import Font
 
 
+class App():
 
-class iHartGUI2017():
+    def __init__(self, root):
 
-    def guiApp(self):
-        self.root = Tk()
+        self.root = root     #creates an instance --> what we call the root window
+        custom_font = Font(family="courier", size=12)
+        self.root.option_add("*Font", custom_font)
+        self.main_panel = MainPanel(self.root)
+        self.upper_bar = UpperBar(self.root, self.main_panel)
+        self.slider = Slider(self.root, self.main_panel, 10, 10, 10, 10, 10)
+        self.menu = MenuBar(self.root,self.main_panel)
+
+    # def fonts(self):
+    #     custom_font = Font(family="courier", size=12)
+    #     # self.root.option_add("*Font", custom_font)
+    #     return custom_font
+
+class MainPanel():
+
+    def __init__(self,root):
+        self.root = root
         self.root.title("iHart GUI Demo")
-        self.customFont = Font(family="courier", size=12)
-        self.root.option_add("*Font", self.customFont)
-        self.defaultW=300
-        self.defaultH=270
+        self.default_width = 300
+        self.default_height = 300
         self.ratio = 1
-        self.frameW  = int(self.defaultW* self.ratio)
-        self.frameH  = int(self.defaultH * self.ratio)
-        self.root.geometry("%dx%d"%(self.frameW,self.frameH))
-        self.menubar()
-        self.create_upper_bar()
-        self.slider(10, 10, 10, 10, 10)
-        self.root.resizable(0,0)
-        self.root.mainloop()
+        frame_width = int(self.default_width * self.ratio)
+        frame_height = int(self.default_height * self.ratio)
+        self.root.geometry("%dx%d" % (frame_width, frame_height))
 
-    def create_upper_bar(self):
+        #
+        # board = Frame(root, height=frame_height, width=frame_width)
+        # self.board = Canvas(board, bd=1, bg="black")
+        #
+        # board.grid(row=1, column=1)
+        # self.board.grid(row=1, column=1)
 
+
+
+    # def panelSize(self):
+    #     custom_font = Font(family="courier", size=12)
+        #         root.option_add("*Font", custom_font)
+
+        # self.root.option_add("*Font", custom_font)
+
+class UpperBar():
+
+    def __init__(self, root, main_panel):
+        self.root = root
+        self.board = main_panel
+        # Style().configure('green/black.TLabel', foreground='green', background='black')
         flip_frame = Frame(self.root)
-        flip_frame.config(height=20)
-        flip_frame.grid(row=0, columnspan = 20, sticky=W+E, padx=5, pady=5)
+        flip_frame.pack(side="top", fill="x", expand=False)
+        # flip_frame.config(width=self.board.default_width, height=2)
+        flip_frame.grid(row=1, columnspan = 10, sticky=W+E, padx=5, pady=5)
         button = Button(flip_frame, text="Flip Horizontal")
         button.pack(anchor = CENTER)
 
 
-    def slider(self, reduceNoise, blurValue, blobSize, motionThread, mergeDistance):
+class Slider():
+    def __init__(self, root, main_panel, reduceNoise, blurValue, blobSize, motionThread, mergeDistance):
 
+        self.root = root
+        self.board = main_panel
+
+        # relative placing
         bottom_frame = Frame(self.root)
         bottom_frame.grid(row=20, column=0, columnspan=3,sticky=W+E+N+S)
 
@@ -149,8 +183,10 @@ class iHartGUI2017():
         self.mergeScale.set(self.input4)
 
 
-    def menubar(self):
-
+class MenuBar():
+    def __init__(self, root, main_panel):
+        self.root = root
+        self.board = main_panel
         self.menubar = Menu(self.root)
 
         # file menu that contains open, save, create presents option
@@ -181,7 +217,7 @@ class iHartGUI2017():
 
     def largerFont(self):
         # self.ratio = self.ratio * 1.2
-        size = self.customFont['size']
+        size = customFont['size']
         self.customFont.configure(size=size+2)
         self.root.update_idletasks()
 
@@ -226,3 +262,9 @@ class iHartGUI2017():
     def create_present(self):
         pass
 
+
+"""This is the code that is executed by python when we run this .py file"""
+if __name__ == '__main__':
+    root = Tk()  # creates an instance --> what we call the root window
+    App(root)
+    root.mainloop()
