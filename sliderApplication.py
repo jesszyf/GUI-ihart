@@ -80,115 +80,64 @@ class UpperBar():
 
 
 class Slider():
+
     def __init__(self, root, main_panel, init_val):
 
         self.root = root
         self.board = main_panel
 
-        bottom_frame = Frame(self.root, bg="red")
-        bottom_frame.grid(row=2, column=0, columnspan=12, sticky=W + E)
-        var = IntVar()
+        FaceVar = IntVar()
+        FaceVar.set(1)
+        MotionVar = BooleanVar()
 
-        enableFaceCheckBox = Checkbutton(bottom_frame, text="Enable Face", variable=var, onvalue=0, offvalue=1)
-        enableMotionCheckBox = Checkbutton(bottom_frame, text="Enable Motion", variable=var, onvalue=1, offvalue=0)
-        enableFaceCheckBox.pack()
-        enableMotionCheckBox.pack()
-        enableFaceCheckBox.grid(row=0, column=0)
-        enableMotionCheckBox.grid(row=0, column=2)
+        checkbox_frame = Frame(self.root)
+        checkbox_frame.grid(row=2, column=0, columnspan=3, sticky=W + E + N + S)
 
-        # relative placing
-        self.create_buttons(var, bottom_frame)
+        enableface_checkbox = Checkbutton(checkbox_frame, text="Enable Face", variable=FaceVar, onvalue=1, offvalue=0)
+        enablemotion_checkbox = Checkbutton(checkbox_frame, text="Enable Motion", variable=MotionVar, onvalue=True, offvalue=False)
+        enableface_checkbox.pack()
+        enablemotion_checkbox.pack()
+        enableface_checkbox.grid(row=0, column=0)
+        enablemotion_checkbox.grid(row=0, column=2)
 
-    # def button(self, i, string, frame):
-    #     text_label = Label(frame, text = string)
-    #     reduce_scale = Scale(frame, from_=)
-    #
-    #     # textLabel0 = Label(bottom_frame, text = "Reduce Noise")
-    #     self.reduceScale = Scale(bottom_frame, from_=0, to=20, variable = ReduceNoiceVar, orient = HORIZONTAL)
-    #     self.reduceScale.set(self.input0)
-    #     increaseButton0 = Button(bottom_frame, text = "+", command = self.increase0)
-    #     decreaseButton0 = Button(bottom_frame, text = "-", command = self.decrease0)
-    #     textLabel0.grid(row = 1, column = 0)
-    #     decreaseButton0.grid(row = 1, column = 1)
-    #     self.reduceScale.grid(row = 1, column = 2)
-    #     increaseButton0.grid(row = 1, column = 3)
-    #
-    #     self.input1 = blurValue
-    #     textLabel1 = Label(bottom_frame, text = "Blur Value")
-    #     self.blurScale = Scale(bottom_frame, from_=0, to=20, variable = BlurValueVar, orient = HORIZONTAL)
-    #     self.blurScale.set(self.input1)
-    #     increaseButton1 = Button(bottom_frame, text = "+", command = self.increase1)
-    #     decreaseButton1 = Button(bottom_frame, text = "-", command = self.decrease1)
-    #     textLabel1.grid(row = 2, column = 0)
-    #     decreaseButton1.grid(row = 2, column = 1)
-    #     self.blurScale.grid(row = 2, column = 2)
-    #     increaseButton1.grid(row = 2, column = 3)
-    #
-    #     self.input2 = blobSize
-    #     textLabel2 = Label(bottom_frame, text = "Blob Size")
-    #     self.blobScale = Scale(bottom_frame, from_=0, to=20, variable = BlobSizeVar, orient = HORIZONTAL)
-    #     self.blobScale.set(self.input2)
-    #     increaseButton2 = Button(bottom_frame, text = "+", command = self.increase2)
-    #     decreaseButton2 = Button(bottom_frame, text = "-", command = self.decrease2)
-    #     textLabel2.grid(row = 3, column = 0)
-    #     decreaseButton2.grid(row = 3, column = 1)
-    #     self.blobScale.grid(row = 3, column = 2)
-    #     increaseButton2.grid(row = 3, column = 3)
-    #
-    #     self.input3 = motionThread
-    #     textLabel3 = Label(bottom_frame, text = "Motion Thread")
-    #     self.motionScale = Scale(bottom_frame, from_=0, to=50, variable = MotionThreadVar, orient = HORIZONTAL)
-    #     self.motionScale.set(self.input3)
-    #     increaseButton3 = Button(bottom_frame, text = "+", command = self.increase3)
-    #     decreaseButton3 = Button(bottom_frame, text = "-", command = self.decrease3)
-    #     textLabel3.grid(row = 4, column = 0)
-    #     decreaseButton3.grid(row = 4, column = 1)
-    #     self.motionScale.grid(row = 4, column = 2)
-    #     increaseButton3.grid(row = 4, column = 3)
-    #
-    #     self.input4 = mergeDistance
-    #     textLabel4 = Label(bottom_frame, text = "Merge Distance")
-    #     self.mergeScale = Scale(bottom_frame, from_=0, to=10, variable = MergeDistanceVar, orient = HORIZONTAL)
-    #     self.mergeScale.set(self.input4)
-    #     increaseButton4 = Button(bottom_frame, text = "+", command = self.increase4)
-    #     decreaseButton4 = Button(bottom_frame, text = "-", command = self.decrease4)
-    #     textLabel4.grid(row = 5, column = 0)
-    #     decreaseButton4.grid(row = 5, column = 1)
-    #     self.mergeScale.grid(row = 5, column = 2)
-    #     increaseButton4.grid(row = 5, column = 3)
+        bottom_frame = Frame(self.root)
+        bottom_frame.grid(row=3, column=0, columnspan=3, sticky=W + E + N + S)
 
+        self.create_buttons(bottom_frame)
 
-    def create_buttons(self, var, frame):
+    def create_buttons(self, frame):
 
         label_text = ["Reduce Noise", "Blur Value", "Blob Size", "Motion Thread", "Merge Distance"]
         to_value = [20, 20, 20, 50, 10]
 
-        self.inputs = defaultdict(int)
-        self.labels = defaultdict(Label)
-        self.scales = defaultdict(Scale)
+        self.inputs = {}
+        self.labels = {}
+        self.scales = {}
+        self.increases = {}
+        self.decreases = {}
+        self.vars = {}
+        for i in range (0,5):
+            self.vars[i] = IntVar()
 
-        for r in range(1, 6):
-            self.labels['label_%02d' % r] = Label(frame, text=label_text[r - 1])
-            # self.label = Label(frame, text=label_text[r - 1])
-            self.inputs["input_%02d" % r] = 20
-            self.scales["input_%02d" % r] = Scale(frame, from_=0, to=to_value[r - 1], variable=var, orient=HORIZONTAL)
-            self.scales.values()[r-1].set(self.inputs.values()[r-1])
-            self.increase = Button(frame, text="+", command=self.increase_val(r))
-            self.decrease = Button(frame, text="-", command=self.decrease_val(r))
-            self.labels.values()[r-1].grid(row=r, column=0)
-            self.decrease.grid(row=r, column=1)
-            self.scales.values()[r-1].grid(row=r, column=2)
-            self.increase.grid(row=r, column=3)
+        for r in range(0, 5):
+            self.labels[r] = Label(frame, text=label_text[r])
+            self.inputs[r] = 10
+            self.scales[r] = Scale(frame, from_=0, to=to_value[r], variable=self.vars[r], orient=HORIZONTAL)
+            self.scales[r].set(self.inputs[r])
+            self.increases[r] = Button(frame, text="+", command=self.increase_val(r))
+            self.decreases[r] = Button(frame, text="-", command=self.decrease_val(r))
+            self.labels[r].grid(row=r+3, column=0)
+            self.decreases[r].grid(row=r+3, column=1)
+            self.scales[r].grid(row=r+3, column=2)
+            self.increases[r].grid(row=r+3, column=3)
 
-        print len(self.labels)
+    def increase_val(self,r):
+        self.inputs[r] = self.inputs[r]+1
+        self.scales[r].set(self.inputs[r])
 
-    def increase_val(self,i):
-        self.inputs.values()[i-1] = self.inputs.values()[i-1]+1
-        self.scales.values()[i-1].set(self.inputs.values()[i-1])
-
-    def decrease_val(self, i):
-        self.inputs.values()[i-1] = self.inputs.values()[i-1] - 1
-        self.scales.values()[i-1].set(self.inputs.values()[i-1])
+    def decrease_val(self, r):
+        self.inputs[r] = self.inputs[r] - 1
+        self.scales[r].set(self.inputs[r])
 
         # def increase0(self):
         #     self.input0= self.input0+1
