@@ -1,171 +1,160 @@
 import tkMessageBox
 from Tkinter import *
 from tkFont import Font
+from collections import defaultdict
 
 
+class App():
+    def __init__(self, root):
+        self.root = root  # creates an instance --> what we call the root window
+        self.main_panel = MainPanel(self.root)
+        self.upper_bar = UpperBar(self.root, self.main_panel)
+        self.slider = Slider(self.root, self.main_panel, 10)
+        self.menu = MenuBar(self.root, self.main_panel)
 
-class iHartGUI2017():
 
-    def guiApp(self):
-        self.root = Tk()
+class MainPanel():
+    def __init__(self, root):
+        self.root = root
+        self.custom_font = Font(family="courier", size=12)
+        self.root.option_add("*Font", self.custom_font)
         self.root.title("iHart GUI Demo")
-        self.customFont = Font(family="courier", size=12)
-        self.root.option_add("*Font", self.customFont)
-        self.defaultW=300
-        self.defaultH=270
+        self.default_width = 300
+        self.default_height = 300
         self.ratio = 1
-        self.frameW  = int(self.defaultW* self.ratio)
-        self.frameH  = int(self.defaultH * self.ratio)
-        self.root.geometry("%dx%d"%(self.frameW,self.frameH))
-        self.menubar()
-        self.create_upper_bar()
-        self.slider(10, 10, 10, 10, 10)
-        self.root.resizable(0,0)
-        self.root.mainloop()
+        frame_width = int(self.default_width * self.ratio)
+        frame_height = int(self.default_height * self.ratio)
+        self.root.geometry("%dx%d" % (frame_width, frame_height))
 
-    def create_upper_bar(self):
+        #
+        # board = Frame(root, height=frame_height, width=frame_width)
+        # self.board = Canvas(board, bd=1, bg="black")
+        #
+        # board.grid(row=1, column=1)
+        # self.board.grid(row=1, column=1)
 
+    def change_font(self):
+        new_font = Font(family="Times", size=12)
+        self.root.option_add("*Font", new_font)
+        self.root.update_idletasks()
+
+    def larger_font(self):
+        size = self.custom_font['size']
+        self.custom_font.configure(size=size + 2)
+        self.root.update_idletasks()
+
+    def smaller_font(self):
+        size = self.custom_font['size']
+        self.custom_font.configure(size=size - 2)
+        self.root.update_idletasks()
+
+    def change_font(self, n):
+        courier12 = Font(family="courier", size=12)
+        # helv12 = Font(family="Helvetica", size=12)
+        # times12 = Font(family="Times", size=12, )
+        if n == 1:
+            self.root.option_add("*Font", courier12)
+            # self.custom_font.config(family="courier")
+            self.root.update_idletasks()
+            # self.root.option_add("*Font", courier12)
+        elif n == 2:
+            # self.custom_font.config(family="Helvetica")
+            self.root.update_idletasks()
+            # self.root.option_add("*Font", helv12)
+        elif n == 3:
+            self.custom_font.config(family="Times")
+            self.root.update_idletasks()
+
+
+class UpperBar():
+    def __init__(self, root, main_panel):
+        self.root = root
+        self.board = main_panel
+        # Style().configure('green/black.TLabel', foreground='green', background='black')
         flip_frame = Frame(self.root)
-        flip_frame.config(height=20)
-        flip_frame.grid(row=0, columnspan = 20, sticky=W+E, padx=5, pady=5)
+        flip_frame.pack(side="top", fill="x", expand=False)
+        # flip_frame.config(width=self.board.default_width, height=2)
+        flip_frame.grid(row=0, columnspan=10, sticky=W + E, padx=5, pady=5)
         button = Button(flip_frame, text="Flip Horizontal")
-        button.pack(anchor = CENTER)
+        button.pack(anchor=CENTER)
 
 
-    def slider(self, reduceNoise, blurValue, blobSize, motionThread, mergeDistance):
+class Slider():
 
-        bottom_frame = Frame(self.root)
-        bottom_frame.grid(row=20, column=0, columnspan=3,sticky=W+E+N+S)
+    def __init__(self, root, main_panel, init_val):
 
-        # varibles for further use
+        self.root = root
+        self.board = main_panel
+
         FaceVar = IntVar()
         FaceVar.set(1)
         MotionVar = BooleanVar()
-        ReduceNoiceVar = IntVar()
-        BlurValueVar = IntVar()
-        BlobSizeVar = IntVar()
-        MotionThreadVar = IntVar()
-        MergeDistanceVar = IntVar()
+        
+        checkbox_frame = Frame(self.root)
+        checkbox_frame.grid(row=2, column=0, columnspan=3, sticky=W + E + N + S)
 
-        enableFaceCheckBox = Checkbutton(bottom_frame, text = "Enable Face", variable = FaceVar, onvalue = 1, offvalue = 0)
-        enableMotionCheckBox = Checkbutton(bottom_frame, text = "Enable Motion", variable = MotionVar, onvalue = True, offvalue = False)
-        enableFaceCheckBox.pack()
-        enableMotionCheckBox.pack()
-        enableFaceCheckBox.grid(row=0, column = 0)
-        enableMotionCheckBox.grid(row = 0, column = 2)
+        enableface_checkbox = Checkbutton(checkbox_frame, text="Enable Face", variable=FaceVar, onvalue=1, offvalue=0)
+        enablemotion_checkbox = Checkbutton(checkbox_frame, text="Enable Motion", variable=MotionVar, onvalue=True, offvalue=False)
+        enableface_checkbox.pack()
+        enablemotion_checkbox.pack()
+        enableface_checkbox.grid(row=0, column=0)
+        enablemotion_checkbox.grid(row=0, column=2)
 
-        self.input0 = reduceNoise
-        textLabel0 = Label(bottom_frame, text = "Reduce Noise")
-        self.reduceScale = Scale(bottom_frame, from_=0, to=20, variable = ReduceNoiceVar, orient = HORIZONTAL)
-        self.reduceScale.set(self.input0)
-        increaseButton0 = Button(bottom_frame, text = "+", command = self.increase0)
-        decreaseButton0 = Button(bottom_frame, text = "-", command = self.decrease0)
-        textLabel0.grid(row = 1, column = 0, sticky = W)
-        decreaseButton0.grid(row = 1, column = 1)
-        self.reduceScale.grid(row = 1, column = 2)
-        increaseButton0.grid(row = 1, column = 3)
+        bottom_frame = Frame(self.root)
+        bottom_frame.grid(row=3, column=0, columnspan=3, sticky=W + E + N + S)
 
-        self.input1 = blurValue
-        textLabel1 = Label(bottom_frame, text = "Blur Value")
-        self.blurScale = Scale(bottom_frame, from_=0, to=20, variable = BlurValueVar, orient = HORIZONTAL)
-        self.blurScale.set(self.input1)
-        increaseButton1 = Button(bottom_frame, text = "+", command = self.increase1)
-        decreaseButton1 = Button(bottom_frame, text = "-", command = self.decrease1)
-        textLabel1.grid(row = 2, column = 0, sticky = W)
-        decreaseButton1.grid(row = 2, column = 1)
-        self.blurScale.grid(row = 2, column = 2)
-        increaseButton1.grid(row = 2, column = 3)
+        self.create_buttons(bottom_frame)
 
-        self.input2 = blobSize
-        textLabel2 = Label(bottom_frame, text = "Blob Size")
-        self.blobScale = Scale(bottom_frame, from_=0, to=20, variable = BlobSizeVar, orient = HORIZONTAL)
-        self.blobScale.set(self.input2)
-        increaseButton2 = Button(bottom_frame, text = "+", command = self.increase2)
-        decreaseButton2 = Button(bottom_frame, text = "-", command = self.decrease2)
-        textLabel2.grid(row = 3, column = 0,sticky = W)
-        decreaseButton2.grid(row = 3, column = 1)
-        self.blobScale.grid(row = 3, column = 2)
-        increaseButton2.grid(row = 3, column = 3)
+    def create_buttons(self, frame):
 
-        self.input3 = motionThread
-        textLabel3 = Label(bottom_frame, text = "Motion Thread")
-        self.motionScale = Scale(bottom_frame, from_=0, to=50, variable = MotionThreadVar, orient = HORIZONTAL)
-        self.motionScale.set(self.input3)
-        increaseButton3 = Button(bottom_frame, text = "+", command = self.increase3)
-        decreaseButton3 = Button(bottom_frame, text = "-", command = self.decrease3)
-        textLabel3.grid(row = 4, column = 0,sticky = W)
-        decreaseButton3.grid(row = 4, column = 1)
-        self.motionScale.grid(row = 4, column = 2)
-        increaseButton3.grid(row = 4, column = 3)
+        label_text = ["Reduce Noise", "Blur Value", "Blob Size", "Motion Thread", "Merge Distance"]
+        to_value = [20, 20, 20, 50, 10]
+        num = label_text.__len__()
+        self.inputs = [None for _ in range(num)]
+        self.labels = [None for _ in range(num)]
+        self.scales = [None for _ in range(num)]
+        self.increases = [None for _ in range(num)]
+        self.decreases = [None for _ in range(num)]
+        self.vars = [None for _ in range(num)]
+        
+        for i in range(num):
+            self.vars[i] = IntVar()
+        initial = 10
+        for r in range(num):
+            self.labels[r] = Label(frame, text=label_text[r])
+            self.inputs[r] = initial
+            self.scales[r] = Scale(frame, from_=0, to=to_value[r], variable=self.vars[r], orient=HORIZONTAL)
+            self.scales[r].set(self.inputs[r])
+            self.increases[r] = Button(frame, text="+", command=lambda r=r: self.increase_this(r))
+            self.decreases[r] = Button(frame, text="-", command=lambda r=r: self.decrease_this(r))
+            self.labels[r].grid(row=r+3, column=0)
+            self.decreases[r].grid(row=r+3, column=1)
+            self.scales[r].grid(row=r+3, column=2)
+            self.increases[r].grid(row=r+3, column=3)
+            initial -=1
 
-        self.input4 = mergeDistance
-        textLabel4 = Label(bottom_frame, text = "Merge Distance")
-        self.mergeScale = Scale(bottom_frame, from_=0, to=10, variable = MergeDistanceVar, orient = HORIZONTAL)
-        self.mergeScale.set(self.input4)
-        increaseButton4 = Button(bottom_frame, text = "+", command = self.increase4)
-        decreaseButton4 = Button(bottom_frame, text = "-", command = self.decrease4)
-        textLabel4.grid(row = 5, column = 0,sticky = W)
-        decreaseButton4.grid(row = 5, column = 1)
-        self.mergeScale.grid(row = 5, column = 2)
-        increaseButton4.grid(row = 5, column = 3)
+    def increase_this(self,i):
+        print "why"
+        input = self.inputs[i]
+        print input
+        self.inputs[i] = input+1
 
-    def increase0(self):
-        if self.input0< 20:
-            self.input0= self.input0+1
-        self.reduceScale.set(self.input0)
+        self.scales[i].set(self.inputs[i])
 
-    def decrease0(self):
-        if self.input0>0:
-            self.input0= self.input0-1
-        self.reduceScale.set(self.input0)
-
-    def increase1(self):
-        if self.input1< 20:
-            self.input1= self.input1+1
-        self.blurScale.set(self.input1)
-
-    def decrease1(self):
-        if self.input1 >0:
-            self.input1= self.input1-1
-        self.blurScale.set(self.input1)
-
-    def increase2(self):
-        if self.input2 <20:
-            self.input2= self.input2+1
-        self.blobScale.set(self.input2)
-
-    def decrease2(self):
-        if self.input2 >0:
-            self.input2= self.input2-1
-        self.blobScale.set(self.input2)
-
-    def increase3(self):
-        if self.input3 <50:
-            self.input3= self.input3+1
-        self.motionScale.set(self.input3)
-
-    def decrease3(self):
-        if self.input3 >0:
-            self.input3= self.input3-1
-        self.motionScale.set(self.input3)
-
-    def increase4(self):
-        if self.input4 <10:
-            self.input4= self.input4+1
-        self.mergeScale.set(self.input4)
-
-    def decrease4(self):
-        if self.input4 >0:
-            self.input4= self.input4-1
-        self.mergeScale.set(self.input4)
+    def decrease_this(self, r):
+        input = self.inputs[r]
+        self.inputs[r] = input - 1
+        self.scales[r].set(self.inputs[r])
 
 
-    def menubar(self):
-
+class MenuBar():
+    def __init__(self, root, main_panel):
+        self.root = root
+        self.board = main_panel
         self.menubar = Menu(self.root)
 
         # file menu that contains open, save, create presents option
-        fileMenu = Menu(self.menubar, tearoff=0 )
+        fileMenu = Menu(self.menubar, tearoff=0)
         # fileMenu.add_command(label="Open Preset", command = self.load_present)
         # fileMenu.add_command(label="Save Preset", command = self.save_present)
         # fileMenu.add_command(label="Create Preset", command = self.create_present)
@@ -173,14 +162,15 @@ class iHartGUI2017():
 
         # about menu that contains About option and Info option
         aboutMenu = Menu(self.menubar, tearoff=0)
-        aboutMenu.add_command(label="About", command = self.about)
-        aboutMenu.add_command(label="Info", command = self.info)
+        aboutMenu.add_command(label="About", command=self.about)
+        aboutMenu.add_command(label="Info", command=self.info)
         self.menubar.add_cascade(label="About", menu=aboutMenu)
 
         # #preference menu
         prefMenu = Menu(self.menubar, tearoff=0)
-        prefMenu.add_command(label="Larger Font", command = self.largerFont)
-        prefMenu.add_command(label="Smaller Font", command = self.smallerFont)
+        prefMenu.add_command(label="Larger Font", command=self.board.larger_font)
+        prefMenu.add_command(label="Smaller Font", command=self.board.smaller_font)
+        prefMenu.add_command(label="Helvetica Font", command=self.board.change_font(2))
         self.menubar.add_cascade(label="Preference", menu=prefMenu)
 
         # quit menu
@@ -190,26 +180,11 @@ class iHartGUI2017():
 
         self.root.config(menu=self.menubar)
 
-    def largerFont(self):
-        # self.ratio = self.ratio * 1.2
-        size = self.customFont['size']
-        self.customFont.configure(size=size+2)
-        self.root.update_idletasks()
-
-
-    def smallerFont(self):
-        size = self.customFont['size']
-        self.customFont.configure(size=size-2)
-        # self.ratio = self.ratio* 0.8
-        self.root.update_idletasks()
-
     def about(self):
-        tkMessageBox.showinfo("About","GUI demo for iHart 2017")
-
+        tkMessageBox.showinfo("About", "GUI demo for iHart 2017")
 
     def info(self):
-        tkMessageBox.showinfo("Info","GUI demo for iHart 2017")
-
+        tkMessageBox.showinfo("Info", "GUI demo for iHart 2017")
 
     def quit(self):
         self.Quitbuttonvar.configure(state="disabled")
@@ -217,12 +192,10 @@ class iHartGUI2017():
             self.root.destroy()
 
     def about(self):
-        tkMessageBox.showinfo("About","GUI demo for iHart 2017")
-
+        tkMessageBox.showinfo("About", "GUI demo for iHart 2017")
 
     def info(self):
-        tkMessageBox.showinfo("Info","GUI demo for iHart 2017")
-
+        tkMessageBox.showinfo("Info", "GUI demo for iHart 2017")
 
     def quit(self):
         if tkMessageBox.askokcancel("Quit", "Do you really want to quit?"):
@@ -237,3 +210,9 @@ class iHartGUI2017():
     def create_present(self):
         pass
 
+
+"""This is the code that is executed by python when we run this .py file"""
+if __name__ == '__main__':
+    root = Tk()  # creates an instance --> what we call the root window
+    App(root)
+    root.mainloop()
