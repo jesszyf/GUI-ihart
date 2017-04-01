@@ -109,75 +109,42 @@ class Slider():
 
         label_text = ["Reduce Noise", "Blur Value", "Blob Size", "Motion Thread", "Merge Distance"]
         to_value = [20, 20, 20, 50, 10]
-
-        self.inputs = {}
-        self.labels = {}
-        self.scales = {}
-        self.increases = {}
-        self.decreases = {}
-        self.vars = {}
-        for i in range (0,5):
+        num = label_text.__len__()
+        self.inputs = [None for _ in range(num)]
+        self.labels = [None for _ in range(num)]
+        self.scales = [None for _ in range(num)]
+        self.increases = [None for _ in range(num)]
+        self.decreases = [None for _ in range(num)]
+        self.vars = [None for _ in range(num)]
+        
+        for i in range(num):
             self.vars[i] = IntVar()
-
-        for r in range(0, 5):
+        initial = 10
+        for r in range(num):
             self.labels[r] = Label(frame, text=label_text[r])
-            self.inputs[r] = 10
+            self.inputs[r] = initial
             self.scales[r] = Scale(frame, from_=0, to=to_value[r], variable=self.vars[r], orient=HORIZONTAL)
             self.scales[r].set(self.inputs[r])
-            self.increases[r] = Button(frame, text="+", command=self.increase_val(r))
-            self.decreases[r] = Button(frame, text="-", command=self.decrease_val(r))
+            self.increases[r] = Button(frame, text="+", command=lambda r=r: self.increase_this(r))
+            self.decreases[r] = Button(frame, text="-", command=lambda r=r: self.decrease_this(r))
             self.labels[r].grid(row=r+3, column=0)
             self.decreases[r].grid(row=r+3, column=1)
             self.scales[r].grid(row=r+3, column=2)
             self.increases[r].grid(row=r+3, column=3)
+            initial -=1
 
-    def increase_val(self,r):
-        self.inputs[r] = self.inputs[r]+1
+    def increase_this(self,i):
+        print "why"
+        input = self.inputs[i]
+        print input
+        self.inputs[i] = input+1
+
+        self.scales[i].set(self.inputs[i])
+
+    def decrease_this(self, r):
+        input = self.inputs[r]
+        self.inputs[r] = input - 1
         self.scales[r].set(self.inputs[r])
-
-    def decrease_val(self, r):
-        self.inputs[r] = self.inputs[r] - 1
-        self.scales[r].set(self.inputs[r])
-
-        # def increase0(self):
-        #     self.input0= self.input0+1
-        #     self.reduceScale.set(self.input0)
-        #
-        # def decrease0(self):
-        #     self.input0= self.input0-1
-        #     self.reduceScale.set(self.input0)
-        #
-        # def increase1(self):
-        #     self.input1= self.input1+1
-        #     self.blurScale.set(self.input1)
-        #
-        # def decrease1(self):
-        #     self.input1= self.input1-1
-        #     self.blurScale.set(self.input1)
-        #
-        # def increase2(self):
-        #     self.input2= self.input2+1
-        #     self.blobScale.set(self.input2)
-        #
-        # def decrease2(self):
-        #     self.input2= self.input2-1
-        #     self.blobScale.set(self.input2)
-        #
-        # def increase3(self):
-        #     self.input3= self.input3+1
-        #     self.motionScale.set(self.input3)
-        #
-        # def decrease3(self):
-        #     self.input3= self.input3-1
-        #     self.motionScale.set(self.input3)
-        #
-        # def increase4(self):
-        #     self.input4= self.input4+1
-        #     self.mergeScale.set(self.input4)
-        #
-        # def decrease4(self):
-        #     self.input4= self.input4-1
-        #     self.mergeScale.set(self.input4)
 
 
 class MenuBar():
