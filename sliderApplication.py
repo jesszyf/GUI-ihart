@@ -89,7 +89,7 @@ class Slider():
         FaceVar = IntVar()
         FaceVar.set(1)
         MotionVar = BooleanVar()
-
+        
         checkbox_frame = Frame(self.root)
         checkbox_frame.grid(row=2, column=0, columnspan=3, sticky=W + E + N + S)
 
