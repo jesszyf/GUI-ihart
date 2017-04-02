@@ -13,6 +13,8 @@ class App():
         self.menu = MenuBar(self.root, self.main_panel)
 
 
+
+
 class MainPanel():
 
     def __init__(self, root):
@@ -21,7 +23,7 @@ class MainPanel():
         self.root.option_add("*Font", self.custom_font)
         self.root.title("iHart GUI Demo")
         self.default_width = 300
-        self.default_height = 300
+        self.default_height = 270
         self.ratio = 1
         frame_width = int(self.default_width * self.ratio)
         frame_height = int(self.default_height * self.ratio)
@@ -66,13 +68,17 @@ class UpperBar():
     def __init__(self, root, main_panel):
         self.root = root
         self.board = main_panel
+        logo = PhotoImage(file="logo.gif")
+        logo = logo.subsample(10,10)
+        logoLabel = Label(root, image=logo)
+        logoLabel.grid()
         # Style().configure('green/black.TLabel', foreground='green', background='black')
         flip_frame = Frame(self.root)
         flip_frame.pack(side="top", fill="x", expand=False)
         # flip_frame.config(width=self.board.default_width, height=2)
         flip_frame.grid(row=0, columnspan=10, sticky=W + E, padx=5, pady=5)
-        button = Button(flip_frame, text="Flip Horizontal")
-        button.pack(anchor=CENTER)
+        flipButton = Button(flip_frame, text="Flip Horizontal")
+        flipButton.pack()
 
 
 class Slider():
@@ -91,8 +97,6 @@ class Slider():
 
         enableface_checkbox = Checkbutton(checkbox_frame, text="Enable Face", variable=FaceVar, onvalue=1, offvalue=0)
         enablemotion_checkbox = Checkbutton(checkbox_frame, text="Enable Motion", variable=MotionVar, onvalue=True, offvalue=False)
-        enableface_checkbox.pack()
-        enablemotion_checkbox.pack()
         enableface_checkbox.grid(row=0, column=0)
         enablemotion_checkbox.grid(row=0, column=2)
 
@@ -101,10 +105,12 @@ class Slider():
 
         self.create_buttons(bottom_frame)
 
+
+
     def create_buttons(self, frame):
 
         label_text = ["Reduce Noise", "Blur Value", "Blob Size", "Motion Thread", "Merge Distance"]
-        to_value = [20, 20, 20, 50, 10]
+        self.to_value = [20, 20, 20, 50, 10]
         num = label_text.__len__()
         self.inputs = [None for _ in range(num)]
         self.labels = [None for _ in range(num)]
@@ -112,6 +118,8 @@ class Slider():
         self.increases = [None for _ in range(num)]
         self.decreases = [None for _ in range(num)]
         self.vars = [None for _ in range(num)]
+
+
         
         for i in range(num):
             self.vars[i] = IntVar()
@@ -119,25 +127,36 @@ class Slider():
         for r in range(num):
             self.labels[r] = Label(frame, text=label_text[r])
             self.inputs[r] = initial
-            self.scales[r] = Scale(frame, from_=0, to=to_value[r], variable=self.vars[r], orient=HORIZONTAL)
+            self.scales[r] = Scale(frame, from_=0, to=self.to_value[r], variable=self.vars[r], orient=HORIZONTAL)
             self.scales[r].set(self.inputs[r])
             self.increases[r] = Button(frame, text="+", command=lambda r=r: self.increase_this(r))
             self.decreases[r] = Button(frame, text="-", command=lambda r=r: self.decrease_this(r))
-            self.labels[r].grid(row=r+3, column=0)
+            self.labels[r].grid(row=r+3, column=0, sticky = W)
             self.decreases[r].grid(row=r+3, column=1)
             self.scales[r].grid(row=r+3, column=2)
             self.increases[r].grid(row=r+3, column=3)
             initial -=1
 
+        root.bind('<Left>', self.keyDecrease)
+        root.bind('<Right>', self.keyIncrease)
+
+    def keyIncrease(self,event):
+        self.increase_this(0)
+
+    def keyDecrease(self, event):
+        self.decrease_this(0)
+
+
     def increase_this(self,i):
         input = self.inputs[i]
-        self.inputs[i] = input+1
-
+        if (input+1 <= self.to_value[i]):
+            self.inputs[i] = input+1
         self.scales[i].set(self.inputs[i])
 
     def decrease_this(self, r):
         input = self.inputs[r]
-        self.inputs[r] = input - 1
+        if (input-1 >=0):
+            self.inputs[r] = input-1
         self.scales[r].set(self.inputs[r])
 
 
