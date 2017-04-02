@@ -1,10 +1,10 @@
 import tkMessageBox
 from Tkinter import *
 from tkFont import Font
-from collections import defaultdict
 
 
 class App():
+
     def __init__(self, root):
         self.root = root  # creates an instance --> what we call the root window
         self.main_panel = MainPanel(self.root)
@@ -14,6 +14,7 @@ class App():
 
 
 class MainPanel():
+
     def __init__(self, root):
         self.root = root
         self.custom_font = Font(family="courier", size=12)
@@ -26,17 +27,11 @@ class MainPanel():
         frame_height = int(self.default_height * self.ratio)
         self.root.geometry("%dx%d" % (frame_width, frame_height))
 
-        #
         # board = Frame(root, height=frame_height, width=frame_width)
         # self.board = Canvas(board, bd=1, bg="black")
         #
         # board.grid(row=1, column=1)
         # self.board.grid(row=1, column=1)
-
-    def change_font(self):
-        new_font = Font(family="Times", size=12)
-        self.root.option_add("*Font", new_font)
-        self.root.update_idletasks()
 
     def larger_font(self):
         size = self.custom_font['size']
@@ -67,6 +62,7 @@ class MainPanel():
 
 
 class UpperBar():
+
     def __init__(self, root, main_panel):
         self.root = root
         self.board = main_panel
@@ -146,6 +142,7 @@ class Slider():
 
 
 class MenuBar():
+
     def __init__(self, root, main_panel):
         self.root = root
         self.board = main_panel
@@ -168,7 +165,6 @@ class MenuBar():
         prefMenu = Menu(self.menubar, tearoff=0)
         prefMenu.add_command(label="Larger Font", command=self.board.larger_font)
         prefMenu.add_command(label="Smaller Font", command=self.board.smaller_font)
-        prefMenu.add_command(label="Helvetica Font", command=self.board.change_font(2))
         self.menubar.add_cascade(label="Preference", menu=prefMenu)
 
         # quit menu
