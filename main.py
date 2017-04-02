@@ -132,9 +132,9 @@ class Slider():
             self.increases[r] = Button(frame, text="+", command=lambda r=r: self.increase_this(r))
             self.decreases[r] = Button(frame, text="-", command=lambda r=r: self.decrease_this(r))
             self.labels[r].grid(row=r+3, column=0, sticky = W)
-            self.decreases[r].grid(row=r+3, column=1)
-            self.scales[r].grid(row=r+3, column=2)
-            self.increases[r].grid(row=r+3, column=3)
+            self.decreases[r].grid(row=r+3, column=1, sticky = S)
+            self.scales[r].grid(row=r+3, column=2, sticky = N)
+            self.increases[r].grid(row=r+3, column=3, sticky = S)
             initial -=1
 
         root.bind('<Left>', self.keyDecrease)
