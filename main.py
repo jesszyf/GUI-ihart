@@ -134,9 +134,7 @@ class Slider():
             initial -=1
 
     def increase_this(self,i):
-        print "why"
         input = self.inputs[i]
-        print input
         self.inputs[i] = input+1
 
         self.scales[i].set(self.inputs[i])
