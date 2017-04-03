@@ -47,8 +47,8 @@ class MainPanel():
 
     def change_font(self, n):
         courier12 = Font(family="courier", size=12)
-        # helv12 = Font(family="Helvetica", size=12)
-        # times12 = Font(family="Times", size=12, )
+        helv12 = Font(family="Helvetica", size=12)
+        times12 = Font(family="Times", size=12, )
         if n == 1:
             self.root.option_add("*Font", courier12)
             # self.custom_font.config(family="courier")
