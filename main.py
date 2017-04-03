@@ -1,7 +1,7 @@
 import tkMessageBox
 from Tkinter import *
 from tkFont import Font
-
+import sys
 
 class App():
     def __init__(self, root):
@@ -22,7 +22,24 @@ class MainPanel():
         self.default_height = 340
         self.ratio = 1
         self.frame_dimensions()
+        # self.set_icon(os.path.join(os.getcwd(), "logo"))
+        # root.wm_iconbitmap('logo_10_10.ico')
+        # root.wm_title('iHart GUI Demo')
         self.root.resizable(0, 0)
+
+    # def set_icon(self, iconName):
+    #
+    #     windowSystem = self.root.call("tk", "windowingsystem")
+    #     if windowSystem == "win32":  # Windows
+    #         print "hi"
+    #         iconName += ".ico"
+    #     elif windowSystem == "x11":  # Unix
+    #         print "hi"
+    #         iconName = "@" + iconName + ".xbm"
+    #     if windowSystem != "aqua" and os.path.isfile(iconName):
+    #         print(iconName)
+    #         self.master.iconbitmap(iconName)
+    #         # self.master.wm_iconbitmap(iconName) also works
 
     def frame_dimensions(self):
         self.frame_width = int(self.default_width * self.ratio)
@@ -67,10 +84,11 @@ class UpperBar():
     def __init__(self, root, main_panel):
         self.root = root
         self.board = main_panel
-        logo = PhotoImage(file="logo.gif")
-        logo = logo.subsample(10, 10)
-        logoLabel = Label(root, image=logo)
-        logoLabel.grid()
+        # logo = PhotoImage(file="logo.gif")
+        # logo = logo.subsample(10, 10)
+        # logoLabel = Label(root, image=logo)
+
+        # logoLabel.grid()
         # Style().configure('green/black.TLabel', foreground='green', background='black')
 
         flip_frame = Frame(self.root)
@@ -79,6 +97,7 @@ class UpperBar():
         flip_frame.grid(row=0, columnspan=10, sticky=W + E, pady=5)
         flipButton = Button(flip_frame, text="Flip Horizontal")
         flipButton.pack()
+
 
 
 class Slider():
